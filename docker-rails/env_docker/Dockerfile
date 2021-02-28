@@ -1,4 +1,7 @@
+#use your ruby version
 FROM ruby:2.7.1
+
+#install dependencies
 RUN apt-get update -qq && apt-get install -y postgresql-client \
   curl \
   build-essential \
@@ -8,13 +11,13 @@ RUN apt-get update -qq && apt-get install -y postgresql-client \
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
   apt-get update && apt-get install -y nodejs yarn
 
+#Set the directory on the container
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 COPY . /myapp
 
-# Add a script to be executed every time the container starts.
 EXPOSE 5000
 
 # Start the main process.
