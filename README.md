@@ -36,7 +36,7 @@ docker-compose up your-service #to see log on command do not use flag -d
 ###### now we need to do some changes on our rails application
 ###### in config/database.yml
 ###### add this lines under encoding
-```ruby
+```yaml
 host: db
 username: postgres
 password: password
