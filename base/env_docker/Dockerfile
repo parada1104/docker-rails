@@ -21,4 +21,4 @@ COPY . /myapp
 EXPOSE 5000
 
 # Start the main process.
-CMD ["foreman", "start", "-f", "Procfile"]
+CMD ["foreman", "start", "-f", "Procfile.dev"]
