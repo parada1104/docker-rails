@@ -68,7 +68,7 @@ redis
 docker-compose run --rm web rails db:create db:migrate
 ```
 
-###### finally brings upp your rails app
+###### finally brings up your rails app
 ```bash
 docker-compose up --build web
 ```
