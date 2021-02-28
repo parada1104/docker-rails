@@ -42,7 +42,7 @@ username: postgres
 password: password
 ```
 
-###### to finish create config/initializers/sidekiq/rb with: 
+###### to finish create config/initializers/sidekiq.rb with: 
 ###### all this because redis service is running on default 0.0.0.0 service host
 ```ruby
 Sidekiq.configure_server do |config|
