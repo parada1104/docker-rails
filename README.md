@@ -1,14 +1,8 @@
 # use this repository for the base on the docker rails development and production rails app dockerize
 
 # Base directory is for guidance on building your docker files
-
+## Copy all the files in base directory to your future rails app directory
 ### For development:
-##### use the docker-compose.yml file
-
-#####  in to the 'docker-rails' context
-```bash
-cd docker-rails
-```
 #### commands:
 ###### create new rails app
 ```bash
