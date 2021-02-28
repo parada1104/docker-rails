@@ -8,14 +8,18 @@ RUN apt-get update -qq && apt-get install -y postgresql-client \
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
   apt-get update && apt-get install -y nodejs yarn
 
-WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
+ENV RAILS_ROOT /var/www/railsprod
+RUN mkdir -p $RAILS_ROOT
+
+# Set working directory, where the commands will be ran:
+WORKDIR $RAILS_ROOT
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 RUN bundle install
-COPY . /myapp
+COPY . .
 
 # Add a script to be executed every time the container starts.
-EXPOSE 80
+EXPOSE 5000
 
 # Start the main process.
 CMD ["foreman", "start", "-f", "Procfile"]

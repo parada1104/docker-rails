@@ -22,8 +22,8 @@ services:
   web:
     build:
       context: .
-      dockerfile: ./env_docker/Dockerfile
-    env_file: ./env_docker/.env
+      dockerfile: ./dev_docker/Dockerfile
+    env_file: ./dev_docker/.env
     volumes:
       - .:/myapp
     ports:
