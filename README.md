@@ -7,6 +7,9 @@ use the docker-compose file
 commands:
 $ docker-compose run --no-deps web rails new . --force --database=postgresql
 
+#change permissions
+$ sudo chown -R $USER:$USER .
+
 after rails new finish its time to build app
 $ docker-compose build web
 
