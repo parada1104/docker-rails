@@ -6,6 +6,9 @@
 ##### use the docker-compose.yml file
 
 #####  in to the 'docker-rails' context
+```bash
+cd docker-rails
+```
 #### commands:
 ###### create new rails app
 ```bash
