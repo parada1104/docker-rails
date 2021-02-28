@@ -31,7 +31,7 @@ docker-compose build web
 docker-compose up your-service #to see log on command do not use flag -d
 ```
 
-## now we need to do some changes on our rails application
+###### now we need to do some changes on our rails application
 ###### in config/database.yml
 ###### add this lines under encoding
 ```ruby
@@ -41,7 +41,7 @@ password: password
 ```
 
 ###### to finish create config/initializers/sidekiq/rb with: 
-##### all this because redis service is running on default 0.0.0.0 service host
+###### all this because redis service is running on default 0.0.0.0 service host
 ```ruby
 Sidekiq.configure_server do |config|
   config.redis = { url: 'redis://redis:6379' }
