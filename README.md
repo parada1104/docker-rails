@@ -61,7 +61,10 @@ sidekiq
 redis
 ```
 
-###### rebuild app with $ docker-compose build web
+###### rebuild app with
+```bash
+docker-compose build web
+```
 
 ###### create database 
 ```bash
