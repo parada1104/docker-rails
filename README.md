@@ -25,11 +25,11 @@ password: password
 
 #to finish create config/initializers/sidekiq/rb with: #all this because redis service is running on default 0.0.0.0 service host
 Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://redis:7372/0' }
+  config.redis = { url: 'redis://redis:6379' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://redis:7372/0' }
+  config.redis = { url: 'redis://redis:6379' }
 end
 
 #add gems tu Gemfile
