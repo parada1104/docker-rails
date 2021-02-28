@@ -1,5 +1,7 @@
 # use this repository for the base on the docker rails development and production rails app dockerize
 
+# Base directory is for guidance on building your docker files
+
 ### For development:
 ##### use the docker-compose.yml file
 
@@ -34,13 +36,13 @@ docker-compose up your-service #to see log on command do not use flag -d
 ###### now we need to do some changes on our rails application
 ###### in config/database.yml
 ###### add this lines under encoding
-```ruby
+```yaml
 host: db
 username: postgres
 password: password
 ```
 
-###### to finish create config/initializers/sidekiq/rb with: 
+###### to finish create config/initializers/sidekiq.rb with: 
 ###### all this because redis service is running on default 0.0.0.0 service host
 ```ruby
 Sidekiq.configure_server do |config|
@@ -59,14 +61,17 @@ sidekiq
 redis
 ```
 
-###### rebuild app with $ docker-compose build web
+###### rebuild app with
+```bash
+docker-compose build web
+```
 
 ###### create database 
 ```bash
 docker-compose run --rm web rails db:create db:migrate
 ```
 
-###### finally brings upp your rails app
+###### finally brings up your rails app
 ```bash
-docker-compose up web
+docker-compose up --build web
 ```
