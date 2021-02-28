@@ -5,7 +5,7 @@ use the docker-compose file
 
 #in to the 'docker-rails' context
 commands:
-$ docker-compose run --no-deps rails new . --force --database=postgresql
+$ docker-compose run --no-deps web rails new . --force --database=postgresql
 
 after rails new finish its time to build app
 $ docker-compose build web
