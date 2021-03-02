@@ -1,5 +1,5 @@
 #use your ruby version
-FROM ruby:2.7.1
+FROM ruby:2.7.1-slim-buster
 
 #install dependencies
 RUN apt-get update -qq && apt-get install -y postgresql-client \

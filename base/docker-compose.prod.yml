@@ -1,41 +1,34 @@
+
 version: "3.9"
 #volumes for persist database and redis data
 volumes:
   db-data:
-    external: false
-  redis-data:
-    external: false
 
 services:
   nginx:
     build:
       context: .
       dockerfile: ./prod_docker/nginx/Dockerfile
-    depends_on:
-      - web
+    env_file: ./prod_docker/.env
     ports:
       - 80:80
-    env_file: ./prod_docker/.env
+      - 443:443
+    depends_on:
+      - web
 
   redis:
     image: redis:alpine
-    volumes:
-      - redis-data:/data
 
   db:
-    image: postgres
+    image: postgres:alpine
     volumes:
       - db-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
-
+  
   web:
     build:
       context: .
       dockerfile: ./prod_docker/web/Dockerfile
     env_file: ./prod_docker/.env
-    environment:
-      RAILS_ENV: production
     depends_on:
       - db
       - redis

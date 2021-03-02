@@ -1,4 +1,4 @@
-FROM ruby:2.7.1
+FROM ruby:2.7.1-slim-buster
 RUN apt-get update -qq && apt-get install -y postgresql-client \
   curl \
   build-essential \
@@ -8,15 +8,17 @@ RUN apt-get update -qq && apt-get install -y postgresql-client \
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
   apt-get update && apt-get install -y nodejs yarn
 
-ENV RAILS_ROOT /var/www/railsprod
-RUN mkdir -p $RAILS_ROOT
+RUN mkdir -p /var/www/railsprod
+ENV RAILS_ENV='production'
+ENV RAKE_ENV='production'
 
 # Set working directory, where the commands will be ran:
-WORKDIR $RAILS_ROOT
+WORKDIR /var/www/railsprod
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
-RUN bundle install
+RUN bundle install --jobs 20 --retry 5 --without development test
 COPY . .
+RUN bundle exec rails assets:precompile
 
 # Add a script to be executed every time the container starts.
 EXPOSE 5000
