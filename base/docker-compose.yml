@@ -22,6 +22,7 @@ services:
       - .:/myapp
     ports:
       - "5000:5000"
+      - "3035:3035"
     depends_on:
       - db
       - redis
