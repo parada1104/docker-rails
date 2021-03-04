@@ -1,6 +1,6 @@
-# use this repository for the base on the docker rails development and production rails app dockerize
-
-# Base directory is for guidance on building your docker files
+# Hey with this guide and repository you should be able to build a Rails application on docker but also using redis, foreman, webpack dev server and also imagemagick(currently only avaiblable on ruby alpine dockerfile)
+## use this repository for the base on the docker rails development and production rails app dockerize
+## Base directory is for guidance on building your docker files
 ## Copy all the files in base directory to your future rails app directory
 ### For development:
 #### commands:
@@ -14,22 +14,6 @@ docker-compose run --no-deps web rails new . --force --database=postgresql
 sudo chown -R $USER:$USER .
 ```
 
-###### after rails new finish its time to build app
-```bash
-docker-compose build web
-```
-
-###### it's time to up the postgresql and redis server
-```bash
- docker-compose up -d db redis   #use -d flag for detach
-```
-
-###### ensure both, redis and db container are up
-###### to log errors on container initialization use 
-```bash
-docker-compose up your-service #to see log on command do not use flag -d
-```
-
 ###### now we need to do some changes on our rails application
 ###### in config/database.yml
 ###### add this lines under encoding
@@ -37,18 +21,6 @@ docker-compose up your-service #to see log on command do not use flag -d
 host: db
 username: postgres
 password: password
-```
-
-###### to finish create config/initializers/sidekiq.rb with: 
-###### all this because redis service is running on default 0.0.0.0 service host
-```ruby
-Sidekiq.configure_server do |config|
-  config.redis = { url: 'redis://redis:6379' }
-end
-
-Sidekiq.configure_client do |config|
-  config.redis = { url: 'redis://redis:6379' }
-end
 ```
 
 ###### add gems tu Gemfile
@@ -71,4 +43,31 @@ docker-compose run --rm web rails db:create db:migrate
 ###### finally brings up your rails app
 ```bash
 docker-compose up --build web
+```
+
+### For Production:
+### Commands:
+###### we need to set production database.yml to our default conf or use a configuration of your preference
+```ruby
+production:
+  <<: *default
+database: myapp_production
+```
+###### we need to build de production image of our application and also nginx image
+```bash
+docker-compose -f docker-compose.prod.yml build #you can also build both separate 
+```
+###### as we are on production environment we need to create,migrate and seed our database if necessary.
+```bash
+docker-compose -f docker-compose.prod.yml run --rm web rails db:setup
+```
+
+###### now its time to get all of our services up 
+```bash
+docker-compose -f docker-compose.prod.yml up -d  
+```
+
+###### remember to build either your nginx image or web service on changes.
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build #also you should skip -d flag to get logs of your container 
 ```
