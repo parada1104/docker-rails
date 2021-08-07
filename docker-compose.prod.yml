@@ -22,14 +22,11 @@ services:
   web:
     build:
       context: .
-      target: dev-build
+      target: prod-build
     env_file: .env
     restart: unless-stopped
-    volumes:
-      - .:/myapp
     ports:
       - "5000:5000"
-      - "3035:3035"
     depends_on:
       - db
       - redis

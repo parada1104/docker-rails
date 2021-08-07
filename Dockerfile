@@ -1,4 +1,4 @@
-FROM ruby:3.0.0-alpine as dev-build
+FROM ruby:2.7.1-alpine as dev-build
 
 RUN apk add --update --virtual \
     runtime-deps \
@@ -36,7 +36,7 @@ RUN bundle install
 CMD ["foreman", "start", "-f", "Procfile.dev"]
 EXPOSE 5000
 
-FROM ruby:3.0.0-alpine as prod-build
+FROM ruby:2.7.1-alpine as prod-build
 RUN apk add --update --virtual \
     runtime-deps \
     postgresql-client \
@@ -63,6 +63,8 @@ COPY . .
 RUN gem install foreman
 RUN yarn install --production
 RUN bundle install --jobs 20 --retry 5 --without development test
+ENTRYPOINT [ "./production-entrypoint.sh" ]
+RUN chmod +x ./production-entrypoint.sh
 EXPOSE 5000
 
 CMD ["foreman", "start", "-f", "Procfile"]
