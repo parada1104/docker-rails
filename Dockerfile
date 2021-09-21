@@ -29,7 +29,6 @@ COPY /Gemfile /Gemfile
 COPY /Gemfile.lock /Gemfile.lock
 
 RUN gem install foreman
-ENV BUNDLE_PATH /gems
 RUN yarn install
 RUN bundle install
 
